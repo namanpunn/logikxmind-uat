@@ -53,7 +53,7 @@ export default function AboutPage() {
                                 with the tools, knowledge, and support they need to launch successful careers in top tech companies.
                             </p>
                             <p className="text-lg text-muted-foreground">
-                                We're committed to fostering a diverse and inclusive tech workforce by empowering students from all
+                                We&apos;re committed to fostering a diverse and inclusive tech workforce by empowering students from all
                                 backgrounds to pursue their dreams and make a lasting impact in the world of technology.
                             </p>
                         </motion.div>
