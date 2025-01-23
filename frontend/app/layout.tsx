@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "LogicMinds - Guide Your Future Career",
+  title: "LogikXMind - Guide Your Future Career",
   description: "Helping college students prepare for and secure jobs in top tech companies.",
 }
 

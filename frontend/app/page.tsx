@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Header from "@/components/header"
-
+import AnimatedCompanyLogos from "@/components/AnimatedCompanyLogos"
 export default function HOME() {
   const [mounted, setMounted] = useState(false)
 
@@ -16,8 +16,6 @@ export default function HOME() {
   if (!mounted) {
     return null
   }
-
-  const companies = ["Google", "Amazon", "IBM", "Adobe", "Microsoft", "Apple", "Facebook", "Netflix", "Tesla", "Uber"]
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -54,27 +52,7 @@ export default function HOME() {
 
         <section className="py-16">
           <h3 className="text-2xl font-semibold text-center mb-8">Prepare for Top Companies</h3>
-          <div className="flex flex-wrap justify-center items-center gap-8">
-            {companies.map((company, index) => (
-              <motion.div
-                key={company}
-                className="bg-muted text-muted-foreground px-4 py-2 rounded-full"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                {company}
-              </motion.div>
-            ))}
-            <motion.div
-              className="bg-muted text-muted-foreground px-4 py-2 rounded-full"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: companies.length * 0.1 }}
-            >
-              And many more...
-            </motion.div>
-          </div>
+          <AnimatedCompanyLogos />
         </section>
 
         <section className="py-16">
