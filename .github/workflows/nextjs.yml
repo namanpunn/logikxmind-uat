@@ -55,9 +55,9 @@ jobs:
         with:
           path: |
             frontend/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/frontend/package-lock.json', '**/frontend/yarn.lock') }}-${{ hashFiles('**/frontend/**/*.[jt]s', '**/frontend/**/*.[jt]sx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('frontend/package-lock.json', 'frontend/yarn.lock') }}-${{ hashFiles('frontend/**/*.[jt]s', 'frontend/**/*.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/frontend/package-lock.json', '**/frontend/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('frontend/package-lock.json', 'frontend/yarn.lock') }}-
 
       - name: Install dependencies
         run: cd frontend && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
