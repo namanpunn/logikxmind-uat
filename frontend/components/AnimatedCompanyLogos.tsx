@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Image from "next/image"
-import { useEffect, useState } from "react"
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const companies = [
     { name: "Google", logo: "/images/google-logo.svg" },
@@ -15,18 +15,35 @@ const companies = [
     { name: "Intel", logo: "/images/intel-logo.svg" },
     { name: "Infosys", logo: "/images/infosys-logo.svg" },
     { name: "tcs", logo: "/images/tcs-logo.svg" },
-]
+];
 
 export default function AnimatedCompanyLogos() {
-    const [duplicatedCompanies, setDuplicatedCompanies] = useState(companies)
+    const [duplicatedCompanies, setDuplicatedCompanies] = useState(companies);
 
     useEffect(() => {
         // Duplicate the array to create a seamless loop
-        setDuplicatedCompanies([...companies, ...companies])
-    }, [])
+        setDuplicatedCompanies([...companies, ...companies]);
+    }, []);
 
     return (
-        <div className="relative w-full overflow-hidden bg-background py-10">
+        <div className="relative w-full overflow-hidden bg-background/80 py-10">
+            {/* Add semi-transparent overlay */}
+            <motion.div
+                className="absolute inset-0 z-10 pointer-events-none"
+                initial={{ opacity: 0 }}
+                animate={{
+                    // opacity: [0, 0.5, 0],
+                    scale: [1, 1.2, 1],
+                }}
+                transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                }}
+                style={{
+                    background: "radial-gradient(circle, rgba(148,163,184,0.15) 0%, transparent 70%)",
+                }}
+            />
             <div className="absolute inset-y-0 left-0 w-1/6 bg-gradient-to-r from-background to-transparent z-10" />
             <div className="absolute inset-y-0 right-0 w-1/6 bg-gradient-to-l from-background to-transparent z-10" />
             <div className="flex">
@@ -45,7 +62,10 @@ export default function AnimatedCompanyLogos() {
                     }}
                 >
                     {duplicatedCompanies.map((company, index) => (
-                        <div key={`${company.name}-${index}`} className="inline-flex items-center justify-center mx-8">
+                        <div
+                            key={`${company.name}-${index}`}
+                            className="inline-flex items-center justify-center mx-8"
+                        >
                             <Image
                                 src={company.logo || "/placeholder.svg"}
                                 alt={`${company.name} logo`}
@@ -58,6 +78,5 @@ export default function AnimatedCompanyLogos() {
                 </motion.div>
             </div>
         </div>
-    )
+    );
 }
-

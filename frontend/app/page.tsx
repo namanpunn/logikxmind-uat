@@ -6,6 +6,7 @@ import { ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Header from "@/components/header"
 import AnimatedCompanyLogos from "@/components/AnimatedCompanyLogos"
+import BackgroundAnimation from "@/components/BackgroundAnimation"
 export default function HOME() {
   const [mounted, setMounted] = useState(false)
 
@@ -20,6 +21,7 @@ export default function HOME() {
   return (
     <>
       <div className="min-h-screen bg-background text-foreground">
+        <BackgroundAnimation />
         <Header />
         <main className="container mx-auto px-4">
           <section className="py-20 text-center">
