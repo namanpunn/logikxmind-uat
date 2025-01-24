@@ -5,12 +5,15 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
+import { Space_Mono } from "next/font/google"
+
+const spaceMono = Space_Mono({ weight: "400", subsets: ["latin"] })
 
 const Header = () => {
     const { theme, setTheme } = useTheme()
     return (
         <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-            <h1 className="text-2xl font-bold">LogikXmind</h1>
+            <h1 className={`text-2xl font-bold lowercase ${spaceMono.className}`}>logikxmind</h1>
             <nav className="space-x-4">
                 <Link href="/" className="hover:underline font-semibold">
                     Home

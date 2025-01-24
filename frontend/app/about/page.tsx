@@ -30,7 +30,7 @@ export default function AboutPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        About LogicMinds
+                        About Logikxmind
                     </motion.h1>
                     <motion.p
                         className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
@@ -48,7 +48,7 @@ export default function AboutPage() {
                         <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
                             <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
                             <p className="text-lg text-muted-foreground mb-6">
-                                At LogicMinds, we believe that every student has the potential to thrive in the tech industry. Our
+                                At logikxmind, we believe that every student has the potential to thrive in the tech industry. Our
                                 mission is to bridge the gap between academic learning and industry requirements, providing students
                                 with the tools, knowledge, and support they need to launch successful careers in top tech companies.
                             </p>
@@ -128,7 +128,7 @@ export default function AboutPage() {
                 <section className="py-20 text-center">
                     <h3 className="text-3xl font-bold mb-6">Ready to Start Your Journey?</h3>
                     <p className="text-xl text-muted-foreground mb-8">
-                        Join LogicMinds today and take the first step towards your dream tech career
+                        Join logikxmind today and take the first step towards your dream tech career
                     </p>
                     <Button size="lg" asChild>
                         <Link href="/">
@@ -141,7 +141,7 @@ export default function AboutPage() {
 
             <footer className="bg-muted py-6 mt-16">
                 <div className="container mx-auto px-4 text-center text-muted-foreground">
-                    © 2025 LogicMinds. All rights reserved.
+                    © 2025 logikxmind. All rights reserved.
                 </div>
             </footer>
         </div>

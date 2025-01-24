@@ -2,15 +2,14 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { ChevronRight, Moon, Sun, Eye, EyeOff, Github } from "lucide-react"
+import { ChevronRight, Eye, EyeOff, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { useTheme } from "next-themes"
 import { useEffect } from "react"
+import Header from "@/components/header"
 
 export default function Login() {
-    const { theme, setTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -41,27 +40,7 @@ export default function Login() {
 
     return (
         <div className="min-h-screen flex flex-col bg-background text-foreground">
-            <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-                <Link href="/" className="text-2xl font-bold">
-                    LogicMinds
-                </Link>
-                <nav className="space-x-4">
-                    <Link href="/" className="hover:underline">
-                        Home
-                    </Link>
-                    <Link href="/about" className="hover:underline">
-                        About
-                    </Link>
-                </nav>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    aria-label="Toggle dark mode"
-                >
-                    {theme === "dark" ? <Sun className="h-[1.2rem] w-[1.2rem]" /> : <Moon className="h-[1.2rem] w-[1.2rem]" />}
-                </Button>
-            </header>
+            <Header />
 
             <main className="flex-grow container mx-auto px-4 py-8 flex items-center justify-center">
                 <motion.div
@@ -70,7 +49,7 @@ export default function Login() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <h1 className="text-3xl font-bold mb-6 text-center">Log In to LogicMinds</h1>
+                    <h1 className="text-3xl font-bold mb-6 text-center">Log In to logikxmind</h1>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <Input
                             id="email"
@@ -155,7 +134,7 @@ export default function Login() {
 
             <footer className="bg-muted py-6">
                 <div className="container mx-auto px-4 text-center text-muted-foreground">
-                    © 2025 LogicMinds. All rights reserved.
+                    © 2025 logikxmind. All rights reserved.
                 </div>
             </footer>
         </div>

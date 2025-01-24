@@ -13,6 +13,8 @@ const companies = [
     { name: "IBM", logo: "/images/ibm-logo.svg" },
     { name: "Adobe", logo: "/images/adobe-logo.svg" },
     { name: "Intel", logo: "/images/intel-logo.svg" },
+    { name: "Infosys", logo: "/images/infosys-logo.svg" },
+    { name: "tcs", logo: "/images/tcs-logo.svg" },
 ]
 
 export default function AnimatedCompanyLogos() {
