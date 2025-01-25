@@ -18,7 +18,7 @@ type Message = {
 const spaceMono = Space_Mono({ weight: "400", subsets: ["latin"] })
 
 export default function ChatbotPage() {
-    const { theme, setTheme, resolvedTheme } = useTheme()
+    const { setTheme, resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
     const [messages, setMessages] = useState<Message[]>([])
     const [input, setInput] = useState("")
@@ -106,12 +106,12 @@ export default function ChatbotPage() {
                                     )}
                                     <div
                                         className={`p-3 rounded-lg max-w-[80%] ${message.role === "user"
-                                            ? isDark
-                                                ? "bg-blue-600 text-white"
-                                                : "bg-blue-100 text-gray-900"
-                                            : isDark
-                                                ? "bg-gray-900 text-gray-100"
-                                                : "bg-gray-50 text-gray-900"
+                                                ? isDark
+                                                    ? "bg-blue-600 text-white"
+                                                    : "bg-blue-100 text-gray-900"
+                                                : isDark
+                                                    ? "bg-gray-900 text-gray-100"
+                                                    : "bg-gray-50 text-gray-900"
                                             }`}
                                     >
                                         <p className="text-sm">{message.content}</p>
