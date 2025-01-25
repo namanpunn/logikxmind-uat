@@ -1,7 +1,17 @@
+import { useTheme } from "next-themes"
 
 export function ThinkingAnimation() {
+    const { resolvedTheme } = useTheme()
+    const isDark = resolvedTheme === "dark"
+
     return (
-        <svg width="40" height="10" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#4B5563">
+        <svg
+            width="40"
+            height="10"
+            viewBox="0 0 120 30"
+            xmlns="http://www.w3.org/2000/svg"
+            fill={isDark ? "#9CA3AF" : "#4B5563"}
+        >
             <circle cx="15" cy="15" r="15">
                 <animate
                     attributeName="r"
