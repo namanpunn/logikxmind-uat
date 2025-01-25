@@ -51,6 +51,11 @@ const Header = () => {
                 <Link href="/about" className="hover:underline">
                     About
                 </Link>
+                {user && (
+                    <Link href="/dashboard" className="hover:underline">
+                        Dashboard
+                    </Link>
+                )}
             </nav>
 
             {/* Desktop Auth/Theme */}
@@ -115,6 +120,11 @@ const Header = () => {
                                 <Link href="/about" className="hover:underline" onClick={toggleMenu}>
                                     About
                                 </Link>
+                                {user && (
+                                    <Link href="/dashboard" className="hover:underline" onClick={toggleMenu}>
+                                        Dashboard
+                                    </Link>
+                                )}
 
                                 <div className="pt-6 border-t">
                                     {user ? (
@@ -123,7 +133,7 @@ const Header = () => {
                                         </Button>
                                     ) : (
                                         <>
-                                            <Button variant="ghost" asChild className="w-full">
+                                            <Button variant="ghost" asChild className="w-full mb-2">
                                                 <Link href="/login" onClick={toggleMenu}>
                                                     Join Us
                                                 </Link>

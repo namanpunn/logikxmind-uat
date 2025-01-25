@@ -44,7 +44,7 @@ export default function Login() {
                     password,
                 })
                 if (error) throw error
-                router.push("/")
+                router.push("/dashboard")
             } catch (error) {
                 alert("Error logging in")
                 console.error(error)
@@ -78,7 +78,7 @@ export default function Login() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <h1 className="text-3xl font-bold mb-6 text-center">Join Us on LogikXMind</h1>
+                    <h1 className="text-3xl font-bold mb-6 text-center">Join Us on logikxmind</h1>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <Input
                             id="email"
@@ -133,7 +133,7 @@ export default function Login() {
 
             <footer className="bg-muted py-6">
                 <div className="container mx-auto px-4 text-center text-muted-foreground">
-                    © 2025 LogikXMind. All rights reserved.
+                    © 2025 logikxmind. All rights reserved.
                 </div>
             </footer>
         </div>

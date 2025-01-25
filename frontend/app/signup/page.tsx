@@ -10,7 +10,7 @@ import { createBrowserClient } from "@supabase/ssr"
 import { useRouter } from "next/navigation"
 import Header from "@/components/header"
 
-export default function SignupPage() {
+export default function Signup() {
     const [mounted, setMounted] = useState(false)
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -51,7 +51,7 @@ export default function SignupPage() {
                     },
                 })
                 if (error) throw error
-                router.push("/")
+                router.push("/dashboard")
             } catch (error) {
                 alert("Error signing up")
                 console.error(error)
@@ -59,8 +59,19 @@ export default function SignupPage() {
         }
     }
 
-    const handleGithubSignup = () => {
-        router.push("/login")
+    const handleGithubSignup = async () => {
+        try {
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: "github",
+                options: {
+                    redirectTo: `${window.location.origin}/auth/callback`,
+                },
+            })
+            if (error) throw error
+        } catch (error) {
+            alert("Error signing up with GitHub")
+            console.error(error)
+        }
     }
 
     return (
@@ -74,7 +85,7 @@ export default function SignupPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <h1 className="text-3xl font-bold mb-6 text-center">Sign Up for LogikXMind</h1>
+                    <h1 className="text-3xl font-bold mb-6 text-center">Sign Up for logikxmind</h1>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <Input
                             id="name"
@@ -139,7 +150,7 @@ export default function SignupPage() {
 
             <footer className="bg-muted py-6">
                 <div className="container mx-auto px-4 text-center text-muted-foreground">
-                    © 2025 LogikXMind. All rights reserved.
+                    © 2025 logikxmind. All rights reserved.
                 </div>
             </footer>
         </div>
