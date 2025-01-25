@@ -48,7 +48,7 @@ export default function ChatbotPage() {
 
     return (
         <div className="flex h-screen bg-gray-50">
-            <Sidebar isOpen={true} isMobileOpen={isMobileSidebarOpen} setIsMobileOpen={setIsMobileSidebarOpen} />
+            <Sidebar isMobileOpen={isMobileSidebarOpen} setIsMobileOpen={setIsMobileSidebarOpen} />
             <div className="flex flex-col flex-grow">
                 <header className="bg-white shadow-sm py-4 px-4 flex items-center">
                     <Button
