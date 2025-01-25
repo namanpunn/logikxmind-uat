@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { useEffect } from "react"
 import Header from "@/components/header"
+import { supabase } from "@/lib/supabase";
 
 export default function Login() {
     const [mounted, setMounted] = useState(false)
@@ -37,6 +38,18 @@ export default function Login() {
             console.log("Login attempted with:", { email, password })
         }
     }
+
+    // GitHub login function
+    const handleGitHubLogin = async () => {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: "github",
+        });
+        if (error) {
+            console.error("GitHub login error:", error.message);
+        } else {
+            console.log("Redirecting to GitHub for login...");
+        }
+    };
 
     return (
         <div className="min-h-screen flex flex-col bg-background text-foreground">
@@ -118,7 +131,7 @@ export default function Login() {
                                     <path fill="none" d="M1 1h22v22H1z" />
                                 </svg>
                             </Button>
-                            <Button variant="outline" size="icon" onClick={() => console.log("Login with GitHub")}>
+                            <Button variant="outline" size="icon" onClick={handleGitHubLogin}>
                                 <Github className="h-5 w-5" />
                             </Button>
                         </div>
