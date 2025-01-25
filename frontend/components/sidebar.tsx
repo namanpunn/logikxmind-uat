@@ -17,7 +17,7 @@ type Chat = {
 }
 
 export function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps) {
-    const { theme, resolvedTheme } = useTheme()
+    const { resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
     const [chats, setChats] = useState<Chat[]>([
         { id: "1", title: "Chat 1" },
