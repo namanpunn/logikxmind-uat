@@ -1,4 +1,9 @@
-"use client"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: "Log In | logikxmind",
+    description: "Log in to your logikxmind account to access personalized career guidance and resources.",
+}
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"

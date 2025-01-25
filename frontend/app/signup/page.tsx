@@ -1,5 +1,8 @@
-"use client"
-
+import type { Metadata } from "next"
+export const metadata: Metadata = {
+    title: "Sign Up | logikxmind",
+    description: "Create your logikxmind account to start your journey towards a successful tech career.",
+}
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { ChevronRight, Eye, EyeOff, Github } from "lucide-react"
