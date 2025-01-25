@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 interface Crack {
@@ -17,10 +17,10 @@ export default function BackgroundAnimation() {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
     const containerRef = useRef<HTMLDivElement>(null)
 
-    let crackCounter = 0;
+    const crackCounter = useRef(0)
 
-    const createCrack = (x: number, y: number) => {
-        const id = Date.now() + crackCounter++;
+    const createCrack = useCallback((x: number, y: number): Crack => {
+        const id = Date.now() + crackCounter.current++;
         const rotation = Math.random() * 360;
         const length = 100 + Math.random() * 200;
         const color = `hsl(${Math.random() * 60 + 200}, 100%, 70%)`;
@@ -33,45 +33,43 @@ export default function BackgroundAnimation() {
             length,
             color,
         };
-    };
-
+    }, []);
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             if (containerRef.current) {
-                const rect = containerRef.current.getBoundingClientRect()
-                const x = e.clientX - rect.left
-                const y = e.clientY - rect.top
-                setMousePosition({ x, y })
+                const rect = containerRef.current.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                setMousePosition({ x, y });
 
                 if (Math.random() < 0.2) {
-                    setCracks(prev => {
-                        const newCrack = createCrack(x, y)
-                        return [...prev, newCrack].slice(-20)
-                    })
+                    setCracks((prev) => {
+                        const newCrack = createCrack(x, y);
+                        return [...prev, newCrack].slice(-20);
+                    });
                 }
             }
-        }
+        };
 
-        window.addEventListener("mousemove", handleMouseMove)
-        return () => window.removeEventListener("mousemove", handleMouseMove)
-    }, [])
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
+    }, [createCrack]);
 
-    // Automatically create and remove cracks
     useEffect(() => {
         const interval = setInterval(() => {
             if (containerRef.current) {
-                const x = Math.random() * containerRef.current.offsetWidth
-                const y = Math.random() * containerRef.current.offsetHeight
-                setCracks(prev => {
-                    const newCrack = createCrack(x, y)
-                    return [...prev, newCrack].slice(-20)
-                })
+                const x = Math.random() * containerRef.current.offsetWidth;
+                const y = Math.random() * containerRef.current.offsetHeight;
+                setCracks((prev) => {
+                    const newCrack = createCrack(x, y);
+                    return [...prev, newCrack].slice(-20);
+                });
             }
-        }, 1500) // Reduced interval
+        }, 1500);
 
-        return () => clearInterval(interval)
-    }, [])
+        return () => clearInterval(interval);
+    }, [createCrack]);
 
     return (
         <div
@@ -79,7 +77,6 @@ export default function BackgroundAnimation() {
             className="fixed inset-0 pointer-events-none overflow-hidden"
             style={{ zIndex: 0 }}
         >
-
             <AnimatePresence>
                 {cracks.map((crack) => (
                     <motion.div
@@ -119,7 +116,7 @@ export default function BackgroundAnimation() {
 
             {/* Mouse follower effect */}
             <motion.div
-                className="absolute w-60 h-60 pointer-events-none"
+                className="absolute pointer-events-none"
                 style={{
                     x: mousePosition.x - 50,
                     y: mousePosition.y - 50,
@@ -136,5 +133,5 @@ export default function BackgroundAnimation() {
                 }}
             />
         </div>
-    )
+    );
 }
