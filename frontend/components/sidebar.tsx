@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import { PlusCircle, MessageSquare, Settings, LogOut, ChevronLeft, ChevronRight } from "lucide-react"
 
 type SidebarProps = {
-    isOpen: boolean
     isMobileOpen: boolean
     setIsMobileOpen: (isOpen: boolean) => void
 }
@@ -14,7 +13,7 @@ type Chat = {
     title: string
 }
 
-export function Sidebar({ isOpen, isMobileOpen, setIsMobileOpen }: SidebarProps) {
+export function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps) {
     const [chats, setChats] = useState<Chat[]>([
         { id: "1", title: "Chat 1" },
         { id: "2", title: "Chat 2" },
