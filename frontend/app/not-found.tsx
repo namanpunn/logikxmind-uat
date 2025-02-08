@@ -29,7 +29,7 @@ export default function NotFound() {
                         Houston, we have a problem!
                     </h2>
                     <p className="text-lg text-muted-foreground mb-8">
-                        The page you're looking for has drifted off into space. Let's get you back to safety.
+                        The page you&apos;re looking for has drifted off into space. Let&apos;s get you back to safety.
                     </p>
                 </motion.div>
 
