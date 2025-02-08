@@ -28,26 +28,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((event, session) => {
-            if (session) {
-                setUser(session.user)
-            } else {
-                setUser(null)
-            }
-            router.refresh()
+            setUser(session?.user || null)
         })
 
         return () => {
             subscription.unsubscribe()
         }
-    }, [router, supabase])
+    }, [supabase])
 
     const signOut = async () => {
         await supabase.auth.signOut()
-        router.push("/")
+        setUser(null)
+        setTimeout(() => router.push("/login"), 100)
     }
 
     return <AuthContext.Provider value={{ user, signOut, supabase }}>{children}</AuthContext.Provider>
 }
 
 export const useAuth = () => useContext(AuthContext)
-
