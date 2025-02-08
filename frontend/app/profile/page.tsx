@@ -1,44 +1,33 @@
-// import Dashboard from "@/components/profileUi/Dashboard"
-// import { Space_Mono } from "next/font/google"
-// import Link from "next/link"
+import Dashboard from "@/components/profileUi/Dashboard"
+import { Space_Mono } from "next/font/google"
+import Link from "next/link"
 
-// const spaceMono = Space_Mono({ weight: "400", subsets: ["latin"] })
+const spaceMono = Space_Mono({ weight: "400", subsets: ["latin"] })
 
-// export default function Profile() {
-//     return (
-//         <div className="h-screen flex flex-col">
-//             <header className="container mx-auto px-4 py-4 md:py-6 flex items-center">
-//                 {/* Logikxmind aligned left and linked to home */}
-//                 <Link href="/" className={`text-xl md:text-2xl font-bold lowercase ${spaceMono.className} mr-auto`}>
-//                     logikxmind
-//                 </Link>
-
-//                 {/* Desktop Navigation */}
-//                 <nav className="hidden md:flex space-x-4">
-//                     <Link href="/" className="hover:underline font-semibold">
-//                         Home
-//                     </Link>
-//                     <Link href="/about" className="hover:underline">
-//                         About
-//                     </Link>
-//                 </nav>
-//             </header>
-
-//             {/* Restrict scrolling to Dashboard */}
-//             <div className="flex-1 overflow-auto">
-//                 <Dashboard />
-//             </div>
-//         </div>
-//     );
-// }
-import React from 'react'
-
-const page = () => {
+export default function Profile() {
     return (
-        <div>
-            <h1>Profile Page</h1>
-        </div>
-    )
-}
+        <div className="h-screen flex flex-col">
+            <header className="container mx-auto px-4 py-4 md:py-6 flex items-center">
+                {/* Logikxmind aligned left and linked to home */}
+                <Link href="/" className={`text-xl md:text-2xl font-bold lowercase ${spaceMono.className} mr-auto`}>
+                    logikxmind
+                </Link>
 
-export default page
+                {/* Desktop Navigation */}
+                <nav className="hidden md:flex space-x-4">
+                    <Link href="/" className="hover:underline font-semibold">
+                        Home
+                    </Link>
+                    <Link href="/about" className="hover:underline">
+                        About
+                    </Link>
+                </nav>
+            </header>
+
+            {/* Restrict scrolling to Dashboard */}
+            <div className="flex-1 overflow-auto">
+                <Dashboard />
+            </div>
+        </div>
+    );
+}

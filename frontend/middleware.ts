@@ -9,6 +9,11 @@ export async function middleware(request: NextRequest) {
     const response = NextResponse.next();
     const requestUrl = new URL(request.url);
 
+    // Explicitly exclude the "not-found" page
+    if (requestUrl.pathname === "/not-found") {
+        return response;
+    }
+
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -30,15 +35,22 @@ export async function middleware(request: NextRequest) {
     const isAuthRoute = authRoutes.some(route => requestUrl.pathname.startsWith(route));
 
     if (!session && isProtectedRoute) {
-        // Redirect to login page if accessing a protected route without a session
+        // Avoid redirecting again if already on login page
+        if (requestUrl.pathname === "/login") {
+            return response;
+        }
+
         const redirectUrl = new URL("/login", request.url);
         redirectUrl.searchParams.set("redirectTo", requestUrl.pathname);
         return NextResponse.redirect(redirectUrl);
     }
 
     if (session) {
-        if (isAuthRoute || requestUrl.pathname === "/") {
-            // Redirect logged-in users trying to access auth routes or homepage
+        if (isAuthRoute) {
+            // Avoid redirecting again if already on dashboard
+            if (requestUrl.pathname === redirectAfterLogin) {
+                return response;
+            }
             return NextResponse.redirect(new URL(redirectAfterLogin, request.url));
         }
     }
@@ -48,6 +60,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        "/((?!_next/static|_next/image|favicon.ico|public).*)",
+        "/((?!_next/static|_next/image|favicon.ico|public|_error|not-found).*)",
     ],
 };
