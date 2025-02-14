@@ -34,25 +34,17 @@ export async function middleware(request: NextRequest) {
     const isProtectedRoute = protectedRoutes.some(route => requestUrl.pathname.startsWith(route));
     const isAuthRoute = authRoutes.some(route => requestUrl.pathname.startsWith(route));
 
+    // Redirect unauthenticated users to login
     if (!session && isProtectedRoute) {
-        // Avoid redirecting again if already on login page
-        if (requestUrl.pathname === "/login") {
-            return response;
-        }
-
         const redirectUrl = new URL("/login", request.url);
         redirectUrl.searchParams.set("redirectTo", requestUrl.pathname);
         return NextResponse.redirect(redirectUrl);
     }
 
-    if (session) {
-        if (isAuthRoute) {
-            // Avoid redirecting again if already on dashboard
-            if (requestUrl.pathname === redirectAfterLogin) {
-                return response;
-            }
-            return NextResponse.redirect(new URL(redirectAfterLogin, request.url));
-        }
+    // Redirect authenticated users away from auth routes, but only on first login
+    if (session && isAuthRoute) {
+        const redirectTo = requestUrl.searchParams.get("redirectTo") || redirectAfterLogin;
+        return NextResponse.redirect(new URL(redirectTo, request.url));
     }
 
     return response;

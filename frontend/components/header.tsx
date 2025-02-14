@@ -44,7 +44,7 @@ const Header = () => {
             <h1 className={`text-xl md:text-2xl font-bold lowercase ${spaceMono.className}`}>logikxmind</h1>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-4">
+            {/* <nav className="hidden md:flex space-x-4">
                 <Link href="/" className="hover:underline font-semibold">
                     Home
                 </Link>
@@ -56,7 +56,23 @@ const Header = () => {
                         Dashboard
                     </Link>
                 )}
-            </nav>
+            </nav> */}
+
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+                <nav className="hidden md:flex space-x-4">
+                    <Link href="/" className="hover:underline font-semibold">
+                        Home
+                    </Link>
+                    <Link href="/about" className="hover:underline">
+                        About
+                    </Link>
+                    {user && (
+                        <Link href="/dashboard" className="hover:underline">
+                            Dashboard
+                        </Link>
+                    )}
+                </nav>
+            </div>
 
             {/* Desktop Auth/Theme */}
             <div className="hidden md:flex items-center space-x-4">
