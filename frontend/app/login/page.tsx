@@ -9,8 +9,10 @@ import Link from "next/link"
 import { createBrowserClient } from "@supabase/ssr"
 import { useRouter } from "next/navigation"
 import Header from "@/components/header"
+import { useAuth } from "@/auth/AuthProvider"
 
 export default function Login() {
+    const { user } = useAuth();
     const [mounted, setMounted] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -24,7 +26,10 @@ export default function Login() {
 
     useEffect(() => {
         setMounted(true)
-    }, [])
+        if (user) {
+            router.replace("/dashboard");
+        }
+    }, [user, router])
 
     if (!mounted) {
         return null

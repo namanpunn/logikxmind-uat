@@ -9,7 +9,6 @@ export async function middleware(request: NextRequest) {
     const response = NextResponse.next();
     const requestUrl = new URL(request.url);
 
-    // Explicitly exclude the "not-found" page
     if (requestUrl.pathname === "/not-found") {
         return response;
     }
@@ -34,17 +33,27 @@ export async function middleware(request: NextRequest) {
     const isProtectedRoute = protectedRoutes.some(route => requestUrl.pathname.startsWith(route));
     const isAuthRoute = authRoutes.some(route => requestUrl.pathname.startsWith(route));
 
-    // Redirect unauthenticated users to login
+    if (session && requestUrl.pathname === "/auth/callback") {
+        return NextResponse.redirect(new URL(redirectAfterLogin, request.url));
+    }
+
     if (!session && isProtectedRoute) {
+        if (requestUrl.pathname === "/login") {
+            return response;
+        }
+
         const redirectUrl = new URL("/login", request.url);
         redirectUrl.searchParams.set("redirectTo", requestUrl.pathname);
         return NextResponse.redirect(redirectUrl);
     }
 
-    // Redirect authenticated users away from auth routes, but only on first login
-    if (session && isAuthRoute) {
-        const redirectTo = requestUrl.searchParams.get("redirectTo") || redirectAfterLogin;
-        return NextResponse.redirect(new URL(redirectTo, request.url));
+    if (session) {
+        if (isAuthRoute) {
+            if (requestUrl.pathname === redirectAfterLogin) {
+                return response;
+            }
+            return NextResponse.redirect(new URL(redirectAfterLogin, request.url));
+        }
     }
 
     return response;
