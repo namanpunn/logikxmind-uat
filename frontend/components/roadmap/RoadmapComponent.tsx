@@ -1,10 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback, JSX } from "react";
 import { motion } from "framer-motion";
-import { format } from "date-fns";
 import {
-  ChevronRight,
-  ChevronLeft,
   BookOpen,
   Video,
   Code,

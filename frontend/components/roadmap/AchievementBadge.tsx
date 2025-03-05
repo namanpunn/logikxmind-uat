@@ -1,5 +1,5 @@
 import React from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import ReactConfetti from "react-confetti"
@@ -12,12 +12,12 @@ interface AchievementBadgeProps {
   onAnimationComplete?: () => void
 }
 
-export function AchievementBadge({ 
-  title, 
-  description, 
-  icon, 
+export function AchievementBadge({
+  title,
+  description,
+  icon,
   isNew = false,
-  onAnimationComplete 
+  onAnimationComplete
 }: AchievementBadgeProps) {
   const [showConfetti, setShowConfetti] = React.useState(isNew)
 
