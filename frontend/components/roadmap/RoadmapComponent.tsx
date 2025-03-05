@@ -353,9 +353,8 @@ const RoadmapComponent: React.FC = () => {
   const checkAndUnlockAchievements = useCallback(
     (nodeId: string) => {
       const completedNodes = roadmapNodes.filter(
-        (node) => node.status === "completed",
+        (node) => node.status === "completed" || node.id === nodeId,
       );
-
       setAchievements((prev) =>
         prev.map((achievement) => {
           if (achievement.unlocked) return achievement;
