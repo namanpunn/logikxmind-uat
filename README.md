@@ -1,6 +1,6 @@
 # mentorAI
 
-# LogikXMind - Available Routes
+# Logikxmind - Available Routes
 
 ## Routes
 
