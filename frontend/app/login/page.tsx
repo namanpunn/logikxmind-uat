@@ -27,7 +27,7 @@ export default function Login() {
     useEffect(() => {
         setMounted(true)
         if (user) {
-            router.replace("/dashboard");
+            router.replace("/profile");
         }
     }, [user, router])
 
@@ -49,7 +49,7 @@ export default function Login() {
                     password,
                 })
                 if (error) throw error
-                router.push("/dashboard")
+                router.push("/profile")
             } catch (error) {
                 alert("Error logging in")
                 console.error(error)
