@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const protectedRoutes = ["/dashboard", "/settings", "/profile"];
 const authRoutes = ["/login", "/signup"];
-const redirectAfterLogin = "/dashboard";
+const redirectAfterLogin = "/profile";
 
 export async function middleware(request: NextRequest) {
     const response = NextResponse.next();
