@@ -28,7 +28,7 @@ export default function Signup() {
     useEffect(() => {
         setMounted(true)
         if (user) {
-            router.replace("/dashboard");
+            router.replace("/profile");
         }
     }, [user, router])
 
@@ -56,7 +56,7 @@ export default function Signup() {
                     },
                 })
                 if (error) throw error
-                router.push("/dashboard")
+                router.push("/profile")
             } catch (error) {
                 alert("Error signing up")
                 console.error(error)
