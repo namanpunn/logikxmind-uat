@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const protectedRoutes = ["/dashboard", "/settings", "/profile"];
+const protectedRoutes = ["/dashboard", "/settings", "/profile", "/roadmap"];
 const authRoutes = ["/login", "/signup"];
 const redirectAfterLogin = "/profile";
 
