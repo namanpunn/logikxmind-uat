@@ -67,8 +67,13 @@ const Header = () => {
                         About
                     </Link>
                     {user && (
-                        <Link href="/dashboard" className="hover:underline">
+                        <Link href="/roadmap" className="hover:underline">
                             Dashboard
+                        </Link>
+                    )}
+                    {user && (
+                        <Link href="/profile" className="hover:underline">
+                            Profile
                         </Link>
                     )}
                 </nav>
@@ -137,8 +142,13 @@ const Header = () => {
                                     About
                                 </Link>
                                 {user && (
-                                    <Link href="/dashboard" className="hover:underline" onClick={toggleMenu}>
+                                    <Link href="/roadmap" className="hover:underline" onClick={toggleMenu}>
                                         Dashboard
+                                    </Link>
+                                )}
+                                {user && (
+                                    <Link href="/profile" className="hover:underline" onClick={toggleMenu}>
+                                        Profile
                                     </Link>
                                 )}
 
