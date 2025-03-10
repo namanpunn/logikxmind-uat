@@ -15,6 +15,7 @@ from pydantic_core.core_schema import CoreSchema, str_schema
 from pydantic.json_schema import JsonSchemaValue
 from pydantic import GetCoreSchemaHandler
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 from dotenv import load_dotenv
 
@@ -37,6 +38,15 @@ chat_collection = db["chat"]
 
 app = FastAPI()
 # oauth2_scheme = OAuth2PasswordBearer(tokenUrl="admin/login")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://logikxmind.com/chat"],
+    allow_origins=["https://logikxmind.com/chat"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # --------------------------- UTILS ---------------------------
 
