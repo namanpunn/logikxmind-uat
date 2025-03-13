@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/auth/AuthProvider"
+import Image from "next/image"
 
 export default function ProfileSection() {
   const router = useRouter()
@@ -105,10 +106,11 @@ export default function ProfileSection() {
           <div className="relative">
             <div className="w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
               {profileData.avatarUrl ? (
-                <img
+                <Image
                   src={profileData.avatarUrl}
                   alt="Avatar"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover rounded-full"
                 />
               ) : (
                 <User className="w-16 h-16 text-gray-400" />
