@@ -36,6 +36,7 @@ const Chatbot = () => {
   }, [user, supabase]);
 
 
+
   const toggleChat = () => {
     if (!isOpen) {
       if (user) {
