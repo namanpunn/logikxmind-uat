@@ -21,13 +21,20 @@ const Chatbot = () => {
           .select("email")
           .eq("id", user.id)
           .single();
-        if (!error) {
+
+        if (error) {
+          console.error("Error fetching email:", error.message);
+          return;
+        }
+
+        if (data) {
           setEmail(data.email);
         }
       };
       fetchEmail();
     }
   }, [user, supabase]);
+
 
   const toggleChat = () => {
     if (!isOpen) {
