@@ -1421,9 +1421,9 @@ const RoadmapComponent: React.FC = () => {
   // Mouse spring animation for smoother cursor effects
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  const springConfig = { damping: 25, stiffness: 300 }
-  const smoothMouseX = useSpring(mouseX, springConfig)
-  const smoothMouseY = useSpring(mouseY, springConfig)
+  // const springConfig = { damping: 25, stiffness: 300 }
+  // const smoothMouseX = useSpring(mouseX, springConfig)
+  // const smoothMouseY = useSpring(mouseY, springConfig)
 
   // Handle mouse move for gradient effects
   const handleMouseMove = (e: React.MouseEvent) => {
