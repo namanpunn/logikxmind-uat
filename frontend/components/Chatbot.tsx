@@ -78,6 +78,7 @@ const Chatbot = () => {
       setMessages((prev) => [...prev, { text: data.response.response || "I couldn't understand your request.", isBot: true }]);
     } catch (error) {
       setMessages((prev) => [...prev, { text: "Sorry, something went wrong.", isBot: true }]);
+      console.log(error);
     } finally {
       setIsThinking(false);
     }
