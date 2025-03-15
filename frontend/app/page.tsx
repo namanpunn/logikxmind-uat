@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import Header from "@/components/header"
+import Chatbot from "@/components/Chatbot"
 import AnimatedCompanyLogos from "@/components/AnimatedCompanyLogos"
 import BackgroundAnimation from "@/components/BackgroundAnimation"
 
@@ -261,7 +262,7 @@ export default function HOME() {
             </Button>
           </section>
         </main>
-
+        <Chatbot />
         <footer className="bg-muted py-6 mt-16">
           <div className="container mx-auto px-4 text-center text-muted-foreground">
             © 2025 logikxmind. All rights reserved.

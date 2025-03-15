@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://mentorai-vovl.onrender.com/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
