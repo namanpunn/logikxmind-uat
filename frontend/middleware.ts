@@ -1,5 +1,13 @@
+import { NextRequest, NextResponse } from "next/server";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { NextResponse, type NextRequest } from "next/server";
+
+const allowedOrigins = ["https://www.logikxmind.com"];
+
+const corsOptions = {
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Origin": "*",
+};
 
 const protectedRoutes = ["/dashboard", "/settings", "/profile", "/roadmap"];
 const authRoutes = ["/login", "/signup"];
@@ -9,6 +17,27 @@ export async function middleware(request: NextRequest) {
     const response = NextResponse.next();
     const requestUrl = new URL(request.url);
 
+    // CORS Handling
+    const origin = request.headers.get("origin") ?? "";
+    const isAllowedOrigin = allowedOrigins.includes(origin);
+
+    if (request.method === "OPTIONS") {
+        const preflightHeaders = {
+            ...(isAllowedOrigin ? { "Access-Control-Allow-Origin": origin } : {}),
+            ...corsOptions,
+        };
+        return new NextResponse(null, { headers: preflightHeaders });
+    }
+
+    if (isAllowedOrigin) {
+        response.headers.set("Access-Control-Allow-Origin", origin);
+    }
+
+    Object.entries(corsOptions).forEach(([key, value]) => {
+        response.headers.set(key, value);
+    });
+
+    // Authentication Handling
     if (requestUrl.pathname === "/not-found") {
         return response;
     }
@@ -41,7 +70,6 @@ export async function middleware(request: NextRequest) {
         if (requestUrl.pathname === "/login") {
             return response;
         }
-
         const redirectUrl = new URL("/login", request.url);
         redirectUrl.searchParams.set("redirectTo", requestUrl.pathname);
         return NextResponse.redirect(redirectUrl);
@@ -61,6 +89,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
+        "/api/:path*",
         "/((?!_next/static|_next/image|favicon.ico|public|_error|not-found).*)",
     ],
 };
