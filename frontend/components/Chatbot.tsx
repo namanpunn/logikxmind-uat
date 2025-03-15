@@ -16,16 +16,11 @@ const Chatbot = () => {
   useEffect(() => {
     if (user) {
       const fetchEmail = async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from("profiles")
           .select("email")
           .eq("id", user.id)
           .single();
-
-        if (error) {
-          console.error("Error fetching email:", error.message);
-          return;
-        }
 
         if (data) {
           setEmail(data.email);
@@ -34,7 +29,6 @@ const Chatbot = () => {
       fetchEmail();
     }
   }, [user, supabase]);
-
 
 
   const toggleChat = () => {
