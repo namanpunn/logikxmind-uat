@@ -1197,7 +1197,7 @@
 "use client"
 import type React from "react"
 import { useState, useEffect, useRef, JSX } from "react"
-import { motion, useMotionValue, useSpring } from "framer-motion"
+import { motion, useMotionValue } from "framer-motion"
 import {
   CheckCircle,
   Lock,
