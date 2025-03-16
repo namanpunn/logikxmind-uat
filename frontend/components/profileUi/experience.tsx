@@ -264,17 +264,18 @@ export default function ExperienceTab() {
                 )}
               </div>
 
-              <div className="flex items-center space-x-2">
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => handleCheckboxChange(!isChecked)}
+              >
                 <Checkbox
                   checked={isChecked}
                   onCheckedChange={handleCheckboxChange}
+                  onClick={(e) => e.stopPropagation()}
                 />
-                <label
-                  htmlFor="current"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
+                <span className="text-sm font-medium leading-none">
                   I am currently working in this role
-                </label>
+                </span>
               </div>
 
               <div className="grid gap-2">
