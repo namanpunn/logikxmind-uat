@@ -96,7 +96,7 @@ export default function ProjectsTab() {
     })
   }
 
-  const handleInputChange = (field: keyof Project, value: any) => {
+  const handleInputChange = <K extends keyof Project>(field: K, value: Project[K]) => {
     setNewProject({
       ...newProject,
       [field]: value,
