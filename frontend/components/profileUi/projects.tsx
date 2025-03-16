@@ -185,19 +185,21 @@ export default function ProjectsTab() {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="name">Project Name*</Label>
+                <Label htmlFor="projectName">Project Name*</Label>
                 <Input
-                  id="name"
+                  id="projectName"
+                  name="projectName"
                   value={newProject.name || ""}
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   placeholder="e.g. E-commerce Platform"
+                  autoComplete="off"
                 />
               </div>
 
               <div className="grid gap-2">
                 <Label htmlFor="type">Project Type*</Label>
                 <Select onValueChange={(value) => handleInputChange("type", value)}>
-                  <SelectTrigger>
+                  <SelectTrigger id="type" name="type">
                     <SelectValue placeholder="Select project type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -363,9 +365,11 @@ export default function ProjectsTab() {
                 <Label htmlFor="repoUrl">Repository URL</Label>
                 <Input
                   id="repoUrl"
+                  name="repoUrl"
                   value={newProject.repoUrl || ""}
                   onChange={(e) => handleInputChange("repoUrl", e.target.value)}
                   placeholder="e.g. https://github.com/username/project"
+                  autoComplete="url"
                 />
               </div>
 
@@ -373,9 +377,11 @@ export default function ProjectsTab() {
                 <Label htmlFor="demoUrl">Demo URL</Label>
                 <Input
                   id="demoUrl"
+                  name="demoUrl"
                   value={newProject.demoUrl || ""}
                   onChange={(e) => handleInputChange("demoUrl", e.target.value)}
                   placeholder="e.g. https://project-demo.example.com"
+                  autoComplete="url"
                 />
               </div>
 
