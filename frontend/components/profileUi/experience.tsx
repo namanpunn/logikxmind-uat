@@ -99,7 +99,7 @@ export default function ExperienceTab() {
     })
   }
 
-  const handleInputChange = (field: keyof Experience, value: any) => {
+  const handleInputChange = <K extends keyof Experience>(field: K, value: Experience[K]) => {
     setNewExperience({
       ...newExperience,
       [field]: value,
