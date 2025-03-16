@@ -104,12 +104,14 @@ export default function ProfileSection() {
       >
         <div className="flex items-center space-x-6">
           <div className="relative">
-            <div className="w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+            <div className="w-32 h-32 relative rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
               {profileData.avatarUrl ? (
                 <Image
                   src={profileData.avatarUrl}
                   alt="Avatar"
                   fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 200px"
                   className="object-cover rounded-full"
                 />
               ) : (
