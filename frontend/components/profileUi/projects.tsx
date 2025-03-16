@@ -10,6 +10,7 @@ import { FolderGit2, Plus, Trash2, Calendar, ExternalLink, Github } from "lucide
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { Checkbox } from "@/components/ui/checkbox"
 import FileUpload from "./file-upload"
 
 interface Project {
@@ -59,6 +60,7 @@ export default function ProjectsTab() {
     technologies: [],
   })
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isChecked, setIsChecked] = useState(false)
   const [techInput, setTechInput] = useState("")
 
   const handleAddProject = () => {
@@ -94,6 +96,16 @@ export default function ProjectsTab() {
       ...newProject,
       file,
     })
+  }
+
+  const handleCheckboxChange = (checked: boolean) => {
+    const value = Boolean(checked)
+    setIsChecked(value)
+    handleInputChange("ongoing", checked);
+
+    if (value) {
+      handleInputChange("endDate", undefined)
+    }
   }
 
   const handleInputChange = <K extends keyof Project>(field: K, value: Project[K]) => {
@@ -173,19 +185,21 @@ export default function ProjectsTab() {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="name">Project Name*</Label>
+                <Label htmlFor="projectName">Project Name*</Label>
                 <Input
-                  id="name"
+                  id="projectName"
+                  name="projectName"
                   value={newProject.name || ""}
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   placeholder="e.g. E-commerce Platform"
+                  autoComplete="off"
                 />
               </div>
 
               <div className="grid gap-2">
                 <Label htmlFor="type">Project Type*</Label>
                 <Select onValueChange={(value) => handleInputChange("type", value)}>
-                  <SelectTrigger>
+                  <SelectTrigger id="type" name="type">
                     <SelectValue placeholder="Select project type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -286,22 +300,18 @@ export default function ProjectsTab() {
                 )}
               </div>
 
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  id="ongoing"
-                  checked={newProject.ongoing}
-                  onChange={(e) => {
-                    handleInputChange("ongoing", e.target.checked)
-                    if (e.target.checked) {
-                      handleInputChange("endDate", undefined)
-                    }
-                  }}
-                  className="rounded border-gray-300"
+              <div
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={() => handleCheckboxChange(!isChecked)}
+              >
+                <Checkbox
+                  checked={isChecked}
+                  onCheckedChange={handleCheckboxChange}
+                  onClick={(e) => e.stopPropagation()}
                 />
-                <label htmlFor="ongoing" className="text-sm font-medium leading-none">
+                <span className="text-sm font-medium leading-none">
                   This is an ongoing project
-                </label>
+                </span>
               </div>
 
               <div className="grid gap-2">
@@ -355,9 +365,11 @@ export default function ProjectsTab() {
                 <Label htmlFor="repoUrl">Repository URL</Label>
                 <Input
                   id="repoUrl"
+                  name="repoUrl"
                   value={newProject.repoUrl || ""}
                   onChange={(e) => handleInputChange("repoUrl", e.target.value)}
                   placeholder="e.g. https://github.com/username/project"
+                  autoComplete="url"
                 />
               </div>
 
@@ -365,9 +377,11 @@ export default function ProjectsTab() {
                 <Label htmlFor="demoUrl">Demo URL</Label>
                 <Input
                   id="demoUrl"
+                  name="demoUrl"
                   value={newProject.demoUrl || ""}
                   onChange={(e) => handleInputChange("demoUrl", e.target.value)}
                   placeholder="e.g. https://project-demo.example.com"
+                  autoComplete="url"
                 />
               </div>
 
