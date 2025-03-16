@@ -1,12 +1,26 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { User, Upload, Award, ArrowRight, Pencil, Save } from "lucide-react"
+import { User, Upload, Award, ArrowRight, Pencil, Save, Check, ChevronsUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/auth/AuthProvider"
 import Image from "next/image"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { cn } from "@/lib/utils"
 
 export default function ProfileSection() {
   const router = useRouter()
@@ -16,12 +30,47 @@ export default function ProfileSection() {
     fullName: "",
     email: "",
     university: "Tech University",
-    graduationYear: "2025",
+    course: "",
+    yearOfJoining: "2021",
     avatarUrl: "",
   })
 
   const [isEditing, setIsEditing] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [open, setOpen] = useState(false)
+
+  const courseOptions = [
+    { value: "btech-cse-core", label: "B.Tech CSE Core" },
+    { value: "btech-cse-aiml", label: "B.Tech CSE (AI & ML)" },
+    { value: "btech-cse-cyber", label: "B.Tech CSE (Cybersecurity)" },
+    { value: "btech-cse-iot", label: "B.Tech CSE (IoT)" },
+    { value: "btech-cse-blockchain", label: "B.Tech CSE (Blockchain)" },
+    { value: "btech-cse-ds", label: "B.Tech CSE (Data Science)" },
+    { value: "btech-civil", label: "B.Tech Civil Engineering" },
+    { value: "btech-mechanical", label: "B.Tech Mechanical Engineering" },
+    { value: "btech-electrical", label: "B.Tech Electrical Engineering" },
+    { value: "btech-ece", label: "B.Tech Electronics & Communication" },
+    { value: "mca-general", label: "MCA General" },
+    { value: "mca-aiml", label: "MCA (AI & ML)" },
+    { value: "mca-cyber", label: "MCA (Cybersecurity)" },
+    { value: "mca-cloud", label: "MCA (Cloud Computing)" },
+    { value: "bca-general", label: "BCA General" },
+    { value: "bca-aiml", label: "BCA (AI & ML)" },
+    { value: "bca-cyber", label: "BCA (Cybersecurity)" },
+    { value: "bca-web", label: "BCA (Web Technologies)" },
+  ]
+
+  const filteredCourses = searchTerm.trim() === ""
+    ? courseOptions
+    : courseOptions.filter(course =>
+      course.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.value.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+
+  const joinYears = Array.from({ length: 10 }, (_, i) =>
+    (new Date().getFullYear() - 5 + i).toString()
+  )
 
   useEffect(() => {
     if (!user) {
@@ -44,7 +93,8 @@ export default function ProfileSection() {
             fullName: data.full_name || "John Doe",
             email: data.email || "john.doe@example.com",
             university: data.university || "Tech University",
-            graduationYear: data.graduation_year || "2025",
+            course: data.course || "",
+            yearOfJoining: data.year_of_joining || "2021",
             avatarUrl: data.avatar_url || "",
           })
         }
@@ -64,7 +114,8 @@ export default function ProfileSection() {
       full_name: profileData.fullName,
       email: profileData.email,
       university: profileData.university,
-      graduation_year: profileData.graduationYear,
+      course: profileData.course,
+      year_of_joining: profileData.yearOfJoining,
       updated_at: new Date().toISOString(),
     }
 
@@ -152,32 +203,117 @@ export default function ProfileSection() {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="space-y-4"
       >
-        <Input
-          placeholder="Full Name"
-          value={profileData.fullName}
-          onChange={(e) => handleInputChange("fullName", e.target.value)}
-          disabled={!isEditing}
-        />
-        <Input
-          placeholder="Email"
-          type="email"
-          value={profileData.email}
-          onChange={(e) => handleInputChange("email", e.target.value)}
-          disabled={!isEditing}
-        />
-        <Input
-          placeholder="University"
-          value={profileData.university}
-          onChange={(e) => handleInputChange("university", e.target.value)}
-          disabled={!isEditing}
-        />
-        <Input
-          placeholder="Graduation Year"
-          type="number"
-          value={profileData.graduationYear}
-          onChange={(e) => handleInputChange("graduationYear", e.target.value)}
-          disabled={!isEditing}
-        />
+        <div className="space-y-2">
+          <Label htmlFor="fullName">Full Name</Label>
+          <Input
+            id="fullName"
+            placeholder="Full Name"
+            value={profileData.fullName}
+            onChange={(e) => handleInputChange("fullName", e.target.value)}
+            disabled={!isEditing}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            placeholder="Email"
+            type="email"
+            value={profileData.email}
+            onChange={(e) => handleInputChange("email", e.target.value)}
+            disabled={!isEditing}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="university">University</Label>
+          <Input
+            id="university"
+            placeholder="University"
+            value={profileData.university}
+            onChange={(e) => handleInputChange("university", e.target.value)}
+            disabled={!isEditing}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="course">Course & Specialization</Label>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-full justify-between"
+                disabled={!isEditing}
+              >
+                {profileData.course
+                  ? courseOptions.find((course) => course.value === profileData.course)?.label
+                  : "Select course..."}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0">
+              <div className="relative">
+                <input
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  placeholder="Search course..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <div className="max-h-[300px] overflow-auto p-1">
+                {filteredCourses.length > 0 ? (
+                  filteredCourses.map((course) => (
+                    <div
+                      key={course.value}
+                      className={cn(
+                        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+                        profileData.course === course.value ? "bg-accent text-accent-foreground" : ""
+                      )}
+                      onClick={() => {
+                        handleInputChange("course", course.value)
+                        setSearchTerm("")
+                        setOpen(false)
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          profileData.course === course.value ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {course.label}
+                    </div>
+                  ))
+                ) : (
+                  <div className="py-6 text-center text-sm">No course found.</div>
+                )}
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="yearOfJoining">Year of Joining</Label>
+          <Select
+            disabled={!isEditing}
+            value={profileData.yearOfJoining}
+            onValueChange={(value) => handleInputChange("yearOfJoining", value)}
+          >
+            <SelectTrigger id="yearOfJoining">
+              <SelectValue placeholder="Select year of joining" />
+            </SelectTrigger>
+            <SelectContent>
+              {joinYears.map((year) => (
+                <SelectItem key={year} value={year}>
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </motion.div>
 
       <div className="flex gap-4">
