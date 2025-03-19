@@ -17,7 +17,6 @@ import RightSide from "./RightSide"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 
 export type RoadmapNode = {
@@ -271,46 +270,7 @@ const RoadmapComponent: React.FC = () => {
     return `${width}px`
   }
 
-  const renderConnections = () => {
-    if (!hasMounted || !mainRef.current || !svgRef.current) return null
-    const mainRect = mainRef.current.getBoundingClientRect()
-    const connections: React.ReactElement[] = []
 
-    sampleData.forEach((node) => {
-      const fromEl = document.getElementById(`node-${node.id}`)
-      if (!fromEl) return
-
-      node.nextSteps.forEach((nextId) => {
-        const toEl = document.getElementById(`node-${nextId}`)
-        if (!toEl) return
-
-        const fromRect = fromEl.getBoundingClientRect()
-        const toRect = toEl.getBoundingClientRect()
-        const startX = fromRect.left + fromRect.width / 2 - mainRect.left
-        const startY = fromRect.top + fromRect.height / 2 - mainRect.top
-        const endX = toRect.left + toRect.width / 2 - mainRect.left
-        const endY = toRect.top + toRect.height / 2 - mainRect.top
-        const midX = (startX + endX) / 2
-        const midY = (startY + endY) / 2 - 30
-        const path = `M${startX},${startY} Q${midX},${midY} ${endX},${endY}`
-
-        connections.push(
-          <motion.path
-            key={`${node.id}-${nextId}`}
-            d={path}
-            stroke="url(#gradient)"
-            strokeWidth={3}
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-          />
-        )
-      })
-    })
-
-    return connections
-  }
 
   const getStatusIcon = (status: string) => {
     switch (status) {
