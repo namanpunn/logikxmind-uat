@@ -170,16 +170,16 @@ export default function ProjectsTab() {
   ]
 
   return (
-    <Card className="w-full max-w-3xl mx-auto">
-      <CardHeader className="flex flex-row items-center justify-between">
+    <Card className="w-full mx-auto">
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <CardTitle>Projects</CardTitle>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 w-full sm:w-auto">
               <Plus className="w-4 h-4" /> Add Project
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+          <DialogContent className="w-[95vw] sm:max-w-[500px] max-h-[90vh] overflow-y-auto p-4 sm:p-6">
             <DialogHeader>
               <DialogTitle>Add Project</DialogTitle>
             </DialogHeader>
@@ -212,10 +212,10 @@ export default function ProjectsTab() {
                 </Select>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label>Start Date*</Label>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col xs:flex-row gap-2">
                     <Select
                       onValueChange={(value) => {
                         const currentDate = newProject.startDate?.split("-") || ["", ""]
@@ -257,7 +257,7 @@ export default function ProjectsTab() {
                 {!newProject.ongoing && (
                   <div className="grid gap-2">
                     <Label>End Date</Label>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col xs:flex-row gap-2">
                       <Select
                         onValueChange={(value) => {
                           const currentDate = newProject.endDate?.split("-") || ["", ""]
@@ -327,11 +327,12 @@ export default function ProjectsTab() {
 
               <div className="grid gap-2">
                 <Label>Technologies Used</Label>
-                <div className="flex gap-2">
+                <div className="flex flex-col xs:flex-row gap-2">
                   <Input
                     value={techInput}
                     onChange={(e) => setTechInput(e.target.value)}
                     placeholder="e.g. React"
+                    className="flex-grow"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         e.preventDefault()
@@ -339,7 +340,7 @@ export default function ProjectsTab() {
                       }
                     }}
                   />
-                  <Button type="button" onClick={handleAddTechnology} variant="outline">
+                  <Button type="button" onClick={handleAddTechnology} variant="outline" className="w-full xs:w-auto">
                     Add
                   </Button>
                 </div>
@@ -390,11 +391,20 @@ export default function ProjectsTab() {
                 <FileUpload onFileSelect={handleFileSelect} accept=".jpg,.jpeg,.png,.gif" />
               </div>
             </div>
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+            <div className="flex flex-col xs:flex-row justify-end gap-2 mt-4">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsDialogOpen(false)}
+                className="w-full xs:w-auto order-2 xs:order-1"
+              >
                 Cancel
               </Button>
-              <Button onClick={handleAddProject}>Add</Button>
+              <Button 
+                onClick={handleAddProject}
+                className="w-full xs:w-auto order-1 xs:order-2"
+              >
+                Add
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -415,20 +425,22 @@ export default function ProjectsTab() {
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 className="border rounded-lg p-4 hover:shadow-md transition-shadow"
               >
-                <div className="flex justify-between">
-                  <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row justify-between gap-4">
+                  <div className="flex flex-col xs:flex-row gap-3">
                     <FolderGit2 className="w-10 h-10 text-orange-500 flex-shrink-0" />
                     <div>
                       <h3 className="font-semibold text-lg">{project.name}</h3>
                       <p className="text-gray-600 dark:text-gray-400">{project.type}</p>
                       <div className="flex items-center gap-1 mt-2 text-sm text-gray-500 dark:text-gray-400">
                         <Calendar className="w-4 h-4" />
-                        <span>
+                        <span className="text-xs xs:text-sm">
                           {formatDate(project.startDate)} - {project.ongoing ? "Present" : formatDate(project.endDate)}
                         </span>
                       </div>
                       {project.description && (
-                        <p className="text-sm mt-2 text-gray-600 dark:text-gray-400">{project.description}</p>
+                        <p className="text-sm mt-2 text-gray-600 dark:text-gray-400 line-clamp-3 sm:line-clamp-none">
+                          {project.description}
+                        </p>
                       )}
                       {project.technologies && project.technologies.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
@@ -442,7 +454,7 @@ export default function ProjectsTab() {
                           ))}
                         </div>
                       )}
-                      <div className="flex gap-4 mt-3">
+                      <div className="flex flex-wrap gap-4 mt-3">
                         {project.repoUrl && (
                           <a
                             href={project.repoUrl}
@@ -472,7 +484,7 @@ export default function ProjectsTab() {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleDeleteProject(project.id)}
-                    className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 h-8 w-8"
+                    className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 h-8 w-8 self-start sm:self-center"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -485,4 +497,3 @@ export default function ProjectsTab() {
     </Card>
   )
 }
-
