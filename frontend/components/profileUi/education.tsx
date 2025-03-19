@@ -113,16 +113,16 @@ export default function EducationTab() {
   }
 
   return (
-    <Card className="w-full max-w-3xl mx-auto">
-      <CardHeader className="flex flex-row items-center justify-between">
+    <Card className="w-full mx-auto">
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <CardTitle>Education</CardTitle>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 w-full sm:w-auto">
               <Plus className="w-4 h-4" /> Add Education
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+          <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto w-[95vw] p-4 sm:p-6">
             <DialogHeader>
               <DialogTitle>Add Education</DialogTitle>
             </DialogHeader>
@@ -167,17 +167,17 @@ export default function EducationTab() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label>Start Date*</Label>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col xs:flex-row gap-2">
                     <Select
                       onValueChange={(value) => {
                         const currentDate = newEducation.startDate?.split("-") || ["", ""]
                         handleInputChange("startDate", `${currentDate[0]}-${value}`)
                       }}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Month" />
                       </SelectTrigger>
                       <SelectContent>
@@ -195,7 +195,7 @@ export default function EducationTab() {
                         handleInputChange("startDate", `${value}-${currentDate[1]}`)
                       }}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Year" />
                       </SelectTrigger>
                       <SelectContent>
@@ -211,14 +211,14 @@ export default function EducationTab() {
 
                 <div className="grid gap-2">
                   <Label>End Date (or Expected)</Label>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col xs:flex-row gap-2">
                     <Select
                       onValueChange={(value) => {
                         const currentDate = newEducation.endDate?.split("-") || ["", ""]
                         handleInputChange("endDate", `${currentDate[0]}-${value}`)
                       }}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Month" />
                       </SelectTrigger>
                       <SelectContent>
@@ -236,7 +236,7 @@ export default function EducationTab() {
                         handleInputChange("endDate", `${value}-${currentDate[1]}`)
                       }}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Year" />
                       </SelectTrigger>
                       <SelectContent>
@@ -287,11 +287,13 @@ export default function EducationTab() {
                 <FileUpload onFileSelect={handleFileSelect} accept=".pdf,.jpg,.jpeg,.png" />
               </div>
             </div>
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+            <div className="flex flex-col xs:flex-row justify-end gap-2 mt-4">
+              <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="w-full xs:w-auto">
                 Cancel
               </Button>
-              <Button onClick={handleAddEducation}>Add</Button>
+              <Button onClick={handleAddEducation} className="w-full xs:w-auto">
+                Add
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -310,34 +312,34 @@ export default function EducationTab() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="border rounded-lg p-4 hover:shadow-md transition-shadow"
+                className="border rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow"
               >
-                <div className="flex justify-between">
-                  <div className="flex gap-3">
-                    <GraduationCap className="w-10 h-10 text-purple-500 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-semibold text-lg">{edu.school}</h3>
-                      <p className="text-gray-600 dark:text-gray-400">
+                <div className="flex flex-col sm:flex-row sm:justify-between">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <GraduationCap className="w-8 h-8 sm:w-10 sm:h-10 text-purple-500 flex-shrink-0" />
+                    <div className="space-y-1 sm:space-y-0">
+                      <h3 className="font-semibold text-base sm:text-lg">{edu.school}</h3>
+                      <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
                         {edu.degree}, {edu.fieldOfStudy}
                       </p>
                       {edu.location && (
-                        <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                           <MapPin className="w-3 h-3" />
                           <span>{edu.location}</span>
                         </div>
                       )}
-                      <div className="flex items-center gap-1 mt-2 text-sm text-gray-500 dark:text-gray-400">
-                        <Calendar className="w-4 h-4" />
+                      <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                        <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span>
-                          {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
+                          {formatDate(edu.startDate)} - {edu.endDate ? formatDate(edu.endDate) : "Present"}
                         </span>
                       </div>
-                      {edu.grade && <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">Grade: {edu.grade}</p>}
+                      {edu.grade && <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Grade: {edu.grade}</p>}
                       {edu.activities && (
-                        <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">Activities: {edu.activities}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Activities: {edu.activities}</p>
                       )}
                       {edu.description && (
-                        <p className="text-sm mt-2 text-gray-600 dark:text-gray-400">{edu.description}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 sm:mt-2">{edu.description}</p>
                       )}
                     </div>
                   </div>
@@ -345,7 +347,7 @@ export default function EducationTab() {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleDeleteEducation(edu.id)}
-                    className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 h-8 w-8"
+                    className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 h-8 w-8 mt-2 sm:mt-0 ml-auto sm:ml-0"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -358,4 +360,3 @@ export default function EducationTab() {
     </Card>
   )
 }
-
