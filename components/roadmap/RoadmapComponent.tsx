@@ -213,7 +213,6 @@ const RoadmapComponent: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false)
 
   const mainRef = useRef<HTMLDivElement>(null)
-  const svgRef = useRef<SVGSVGElement>(null)
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePosition({ x: e.clientX, y: e.clientY })
