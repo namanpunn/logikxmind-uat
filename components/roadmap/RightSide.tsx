@@ -1,11 +1,7 @@
 "use client"
 import React from "react"
-import { motion } from "framer-motion"
-
-import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import ResourcePanel from "./ResourcePanel"
-import { cn } from "@/lib/utils"
 
 interface RightSidebarProps {
   rightSidebarOpen: boolean
@@ -18,9 +14,6 @@ interface RightSidebarProps {
 }
 
 const RightSide: React.FC<RightSidebarProps> = ({
-  rightSidebarOpen,
-  setRightSidebarOpen,
-  sidebarWidth,
   selectedDate,
   setSelectedDate,
   sampleData,

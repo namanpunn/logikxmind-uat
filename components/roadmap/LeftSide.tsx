@@ -1,11 +1,6 @@
 "use client"
 import React from "react"
-import { motion } from "framer-motion"
-import { Sparkles, X } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
 import ProgressTracker from "./ProgressTracker"
-import { cn } from "@/lib/utils"
 
 // Define your RoadmapNode type (adjust or import it if defined elsewhere)
 export type RoadmapNode = {
@@ -36,9 +31,6 @@ interface LeftSidebarProps {
 }
 
 const LeftSide: React.FC<LeftSidebarProps> = ({
-  leftSidebarOpen,
-  setLeftSidebarOpen,
-  sidebarWidth,
   sampleData,
 }) => {
   return (
