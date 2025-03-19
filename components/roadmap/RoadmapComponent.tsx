@@ -408,7 +408,7 @@ const RoadmapComponent: React.FC = () => {
       <div
         id="right-sidebar"
         className={cn(
-          "fixed top-0 right-0 h-full bg-background/95 backdrop-blur-sm border-l border-border z-40 transition-all duration-300 ease-in-out",
+          "fixed top-0 right-0 h-full bg-background/95 backdrop-blur-sm border-l border-border z-40 transition-all duration-300 ease-in-out overflow-y-auto",
           rightSidebarOpen 
             ? "translate-x-0" 
             : "translate-x-full",
@@ -582,49 +582,9 @@ const RoadmapComponent: React.FC = () => {
               </motion.div>
             ))}
           </div>
-          <svg
-            ref={svgRef}
-            className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"
-            style={{ top: 0, left: 0, width: "100%", height: "100%" }}
-          >
-            <defs>
-              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.2" />
-              </linearGradient>
-            </defs>
-            {renderConnections()}
-          </svg>
+         
         </div>
       </main>
-      
-      {/* Mobile Action Buttons */}
-      <div className="md:hidden fixed bottom-4 left-0 right-0 flex justify-center gap-4 z-50">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="default" size="icon" className="rounded-full shadow-lg" onClick={() => setLeftSidebarOpen(true)}>
-                <Menu className="w-5 h-5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Learning Path</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="default" size="icon" className="rounded-full shadow-lg" onClick={() => setRightSidebarOpen(true)}>
-                <CalendarIcon className="w-5 h-5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Resources</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
       
       {/* Mobile overlay when sidebar is open */}
       {isMobile && (leftSidebarOpen || rightSidebarOpen) && (

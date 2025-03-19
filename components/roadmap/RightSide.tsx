@@ -22,7 +22,7 @@ const RightSide: React.FC<RightSidebarProps> = ({
 }) => {
   return (
     <>
-      <div className="p-4 overflow-y-auto h-[calc(100%-60px)]">
+      <div className="p-4 overflow-y-auto h-[calc(100%-60px)] ">
       <Calendar
   mode="single"
   selected={selectedDate}
