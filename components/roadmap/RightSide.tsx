@@ -2,6 +2,7 @@
 import React from "react"
 import { Calendar } from "@/components/ui/calendar"
 import ResourcePanel from "./ResourcePanel"
+import { RoadmapNode } from "./RoadmapComponent"
 
 interface RightSidebarProps {
   rightSidebarOpen: boolean
@@ -9,7 +10,7 @@ interface RightSidebarProps {
   sidebarWidth: string | number
   selectedDate: Date | undefined
   setSelectedDate: (date: Date | undefined) => void
-  sampleData: any[] // Replace 'any[]' with your RoadmapNode[] type if available
+  sampleData: RoadmapNode[]// Replace 'any[]' with your RoadmapNode[] type if available
   selectedNode: string | null
 }
 
