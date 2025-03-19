@@ -132,16 +132,16 @@ export default function ExperienceTab() {
   }
 
   return (
-    <Card className="w-full max-w-3xl mx-auto">
-      <CardHeader className="flex flex-row items-center justify-between">
+    <Card className="w-full mx-auto ">
+      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mx-auto  ">
         <CardTitle>Experience</CardTitle>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
+            <Button className="flex items-center gap-2 w-full sm:w-auto">
               <Plus className="w-4 h-4" /> Add Experience
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+          <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto w-[95vw]">
             <DialogHeader>
               <DialogTitle>Add Experience</DialogTitle>
             </DialogHeader>
@@ -176,10 +176,10 @@ export default function ExperienceTab() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="grid gap-2">
                   <Label>Start Date*</Label>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col xs:flex-row gap-2">
                     <Select
                       onValueChange={(value) => {
                         const currentDate = newExperience.startDate?.split("-") || ["", ""]
@@ -221,7 +221,7 @@ export default function ExperienceTab() {
                 {!newExperience.current && (
                   <div className="grid gap-2">
                     <Label>End Date</Label>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col xs:flex-row gap-2">
                       <Select
                         onValueChange={(value) => {
                           const currentDate = newExperience.endDate?.split("-") || ["", ""]
@@ -294,11 +294,13 @@ export default function ExperienceTab() {
                 <FileUpload onFileSelect={handleFileSelect} accept=".pdf,.jpg,.jpeg,.png" />
               </div>
             </div>
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+            <div className="flex flex-col xs:flex-row justify-end gap-2">
+              <Button variant="outline" onClick={() => setIsDialogOpen(false)} className="w-full xs:w-auto">
                 Cancel
               </Button>
-              <Button onClick={handleAddExperience}>Add</Button>
+              <Button onClick={handleAddExperience} className="w-full xs:w-auto">
+                Add
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -319,11 +321,21 @@ export default function ExperienceTab() {
                 transition={{ duration: 0.3, delay: index * 0.1 }}
                 className="border rounded-lg p-4 hover:shadow-md transition-shadow"
               >
-                <div className="flex justify-between">
-                  <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row justify-between">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <Briefcase className="w-10 h-10 text-blue-500 flex-shrink-0" />
                     <div>
-                      <h3 className="font-semibold text-lg">{exp.title}</h3>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 justify-between">
+                        <h3 className="font-semibold text-lg">{exp.title}</h3>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDeleteExperience(exp.id)}
+                          className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 h-8 w-8 sm:hidden self-end"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
                       <p className="text-gray-600 dark:text-gray-400">{exp.company}</p>
                       {exp.location && (
                         <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -333,7 +345,7 @@ export default function ExperienceTab() {
                       )}
                       <div className="flex items-center gap-1 mt-2 text-sm text-gray-500 dark:text-gray-400">
                         <Calendar className="w-4 h-4" />
-                        <span>
+                        <span className="break-words">
                           {formatDate(exp.startDate)} - {exp.current ? "Present" : formatDate(exp.endDate)}
                         </span>
                       </div>
@@ -346,7 +358,7 @@ export default function ExperienceTab() {
                     variant="ghost"
                     size="icon"
                     onClick={() => handleDeleteExperience(exp.id)}
-                    className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 h-8 w-8"
+                    className="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 h-8 w-8 hidden sm:flex"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -359,4 +371,3 @@ export default function ExperienceTab() {
     </Card>
   )
 }
-
