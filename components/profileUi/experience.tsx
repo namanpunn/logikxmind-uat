@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import FileUpload from "./file-upload"
+// import FileUpload from "./file-upload"
 import { useAuth } from "@/auth/AuthProvider"
 
 // ----------------------------------------------------
@@ -71,7 +71,7 @@ export default function ExperienceTab() {
         console.error("❌ Error fetching experiences:", error.message)
       } else {
         setExperiences(
-          data.map((exp: any) => ({
+          data.map((exp) => ({
             id: exp.id,
             // Map the DB column `role_title` to our interface
             role_title: exp.role_title,
