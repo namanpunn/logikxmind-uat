@@ -72,7 +72,9 @@ export default function Settings() {
       email_notifications: newEmailNotifications,
       public_profile: newPublicProfile,
       ai_learning_assistant: newAiAssistant,
-    });
+    },
+    { onConflict: "user_id" } 
+  );
 
     if (error) {
       console.error("Error upserting user settings:", error.message);
