@@ -61,7 +61,7 @@ export default function ProjectsTab() {
         console.error("❌ Error fetching projects:", error.message)
       } else if (data) {
         // Map DB fields to our local Project interface
-        const mapped = data.map((proj: any) => ({
+        const mapped = data.map((proj) => ({
           id: proj.id,
           name: proj.title,
           type: proj.subtitle ?? "",
