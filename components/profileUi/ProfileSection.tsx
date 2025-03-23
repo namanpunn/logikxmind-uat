@@ -79,13 +79,75 @@ export default function ProfileSection() {
     }
 
     const fetchProfile = async () => {
+      if (!user) {
+        console.log("No user logged in.")
+        return
+      }
+    
       try {
+        // First check if profile exists to avoid multiple results error
+        const { data: profileExists, error: countError } = await supabase
+          .from("profiles")
+          .select("id", { count: "exact" })
+          .eq("id", user.id)
+        
+        if (countError) {
+          console.error("❌ Error checking profile existence:", countError.message)
+          return
+        }
+        
+        // If no profile exists, create one
+        if (profileExists.length === 0) {
+          console.log("No profile found, creating one...")
+          
+          const newProfile = {
+            id: user.id,
+            email: user.email || "",
+            username: user.user_metadata?.user_name || "",
+            avatar_url: user.user_metadata?.avatar_url || "",
+            full_name: user.user_metadata?.name || "New User",
+            university: "Tech University",
+            year_of_joining: "2021",
+            course: "",
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }
+          
+          const { error: insertError } = await supabase
+            .from("profiles")
+            .insert([newProfile])
+          
+          if (insertError) {
+            console.error("❌ Error creating profile:", insertError.message)
+            return
+          }
+          
+          setProfileData({
+            fullName: newProfile.full_name,
+            email: newProfile.email,
+            university: newProfile.university,
+            course: newProfile.course,
+            yearOfJoining: newProfile.year_of_joining,
+            avatarUrl: newProfile.avatar_url
+          })
+          
+          console.log("✅ Profile created successfully")
+          return
+        }
+        
+        // If multiple profiles exist, this is an error we should clean up
+        if (profileExists.length > 1) {
+          console.error("❌ Multiple profiles found for this user. This is unexpected.")
+          // You could add code here to delete extra profiles if needed
+        }
+        
+        // Now fetch the profile data
         const { data, error } = await supabase
           .from("profiles")
           .select("*")
           .eq("id", user.id)
           .single()
-
+    
         if (error) {
           console.error("❌ Error fetching profile:", error.message)
         } else {
@@ -95,7 +157,7 @@ export default function ProfileSection() {
             university: data.university || "Tech University",
             course: data.course || "",
             yearOfJoining: data.year_of_joining || "2021",
-            avatarUrl: data.avatar_url || "",
+            avatarUrl: data.avatar_url || ""
           })
         }
       } catch (err) {
