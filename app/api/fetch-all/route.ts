@@ -1,15 +1,16 @@
-import { supabase } from '@/lib/supabase';
-import { NextResponse } from 'next/server';
+import { supabase } from "@/lib/supabase";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
     // Adjust these table names to match your actual schema
-    const [educationRes, experiencesRes, profilesRes, certificationsRes] = await Promise.all([
-      supabase?.from('education').select('*'),
-      supabase?.from('experiences').select('*'),
-      supabase?.from('profiles').select('*'),
-      supabase?.from('certifications').select('*'),
-    ]);
+    const [educationRes, experiencesRes, profilesRes, certificationsRes] =
+      await Promise.all([
+        supabase?.from("education").select("*"),
+        supabase?.from("experiences").select("*"),
+        supabase?.from("profiles").select("*"),
+        supabase?.from("certifications").select("*"),
+      ]);
 
     // Check for any errors
     if (
@@ -20,10 +21,11 @@ export async function GET() {
     ) {
       return NextResponse.json(
         {
-          error: educationRes?.error?.message ||
-                 experiencesRes?.error?.message ||
-                 profilesRes?.error?.message ||
-                 certificationsRes?.error?.message,
+          error:
+            educationRes?.error?.message ||
+            experiencesRes?.error?.message ||
+            profilesRes?.error?.message ||
+            certificationsRes?.error?.message,
         },
         { status: 500 }
       );
@@ -38,8 +40,16 @@ export async function GET() {
     };
 
     return NextResponse.json(responseData, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json(
+      { error: "An unknown error occurred" },
+      { status: 500 }
+    );
   }
 }
